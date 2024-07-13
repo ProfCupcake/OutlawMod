@@ -6,48 +6,28 @@
 	deadHitboxSize: { x: 0.75, y: 0.5 },
 	eyeHeight: 1.7,
 	attributes: { 
+		hasNightVision: true,
 		reckless: false, 
 		classicVoice: "sounds/voice/harmonica",
 		killedByInfoText: "deadcreature-eaten-looter",
 	},
 
 	drops: [
-			{
-				type: "item",
-				code: "game:bread-rye-perfect",
-				quantity: { avg: 0.15, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-carrot",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-turnip",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-onion",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-parsnip",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:egg-chicken-raw",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:club-generic-wood",
-				quantity: { avg: 0.10, var: 0.0 }
-			}
-			
+		{
+			type: "item",
+			code: "game:gear-temporal",
+			quantity: { avg: 0.033325, var: 0 }
+		},
+		{
+			type: "item",
+			code: "game:gear-rusty",
+			quantity: { avg: 0.03, var: 0 }
+		},
+		{
+			type: "item",
+			code: "game:axe-bearded-ruined",
+			quantity: { avg: 0.025, var: 0 }
+		},			
 	],
 	client: {
 		renderer: "Shape",
@@ -199,12 +179,12 @@
 						priority: 2.5,
 						mincooldown: 0, 
 						maxcooldown: 0, 
-						pursueSpeed: 0.010,
+						pursueSpeed: 0.048,
 						pursueRange: 40,
-						pursueAnimation: "walk",
-						engageSpeed: 0.010,
+						pursueAnimation: "sprint",
+						engageSpeed: 0.035,
 						engageRange: 3,
-						engageAnimation: "walk",
+						engageAnimation: "sprint",
 
 						withdrawIfNoPath: false,
 						withdrawDist: 9.0,
@@ -225,12 +205,12 @@
 						priorityForCancel: 2.5,
 						mincooldown: 0, 
 						maxcooldown: 0, 
-						pursueSpeed: 0.010,
+						pursueSpeed: 0.048,
 						pursueRange: 22,
-						pursueAnimation: "walk",
-						engageSpeed: 0.010,
+						pursueAnimation: "sprint",
+						engageSpeed: 0.035,
 						engageRange: 3,
-						engageAnimation: "walk",
+						engageAnimation: "sprint",
 
 						withdrawIfNoPath: false,
 						withdrawDist: 9.0,
@@ -287,18 +267,19 @@
 			tryOnlySurface: false,
 			chance: 0.1,
 			maxQuantity: 8,
-			//maxQuantityByGroup: { code: "ghoul", maxQuantity: 32 },
+			maxQuantityByGroup: { code: "ghoul-axe", maxQuantity: 2 },
 			spawnCapPlayerScaling: 0.05,
 			"__comment": "Make them spawn away from artifical light",
 			maxLightLevel: 4,
 			lightLevelType: "MaxLight",					
-			groupSize: { dist: "stronginvexp", avg: 2, var: 1 },
+			groupSize: { dist: "stronginvexp", avg: 1, var: 1 },
 			insideBlockCodes: ["game:air", "tallgrass-*", "loosestones-*"],
+			maxY:0.69,
 			minY:0.0,
 			MinDistanceToPlayer: 15,
 			companions: []
 		}
-	}
+	},
 	sounds: {
 		idle: "creature/bandit/idle1",
 		hurt: "creature/bandit/hurt",

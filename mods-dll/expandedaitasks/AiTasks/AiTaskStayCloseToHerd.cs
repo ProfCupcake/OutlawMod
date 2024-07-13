@@ -267,7 +267,7 @@ namespace ExpandedAiTasks
                 if (moveFarAnimation != null)
                     entity.AnimManager.StartAnimation(new AnimationMetaData() { Animation = moveFarAnimation, Code = moveFarAnimation }.Init());
 
-                if (moveNearAnimation != null)
+                if (moveNearAnimation != null && moveNearAnimation != moveFarAnimation)
                     entity.AnimManager.StopAnimation(moveNearAnimation);
             }
             else
@@ -275,7 +275,7 @@ namespace ExpandedAiTasks
                 if (moveNearAnimation != null)
                     entity.AnimManager.StartAnimation(new AnimationMetaData() { Animation = moveNearAnimation, Code = moveNearAnimation }.Init());
 
-                if (moveFarAnimation != null)
+                if (moveFarAnimation != null && moveNearAnimation != moveFarAnimation)
                     entity.AnimManager.StopAnimation(moveFarAnimation);
             }
 

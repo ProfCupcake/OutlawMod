@@ -1053,24 +1053,6 @@
 					}
 				},
 				{
-					"frame": 8,
-					"elements": {
-
-					}
-				},
-				{
-					"frame": 12,
-					"elements": {
-
-					}
-				},
-				{
-					"frame": 21,
-					"elements": {
-
-					}
-				},
-				{
 					"frame": 29,
 					"elements": {
 						"UpperTorso": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
@@ -1414,39 +1396,6 @@
 					"elements": {
 						"UpperArmL": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"LowerArmL": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
-					}
-				}
-			]
-		},
-
-		{
-			"name": "hurt",
-			"code": "hurt",
-			"quantityframes": 30,
-			"onActivityStopped": "PlayTillEnd",
-			"onAnimationEnd": "Stop",
-			"keyframes": [
-				{
-					"frame": 0,
-					"elements": {
-						"UpperTorso": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"UpperArmR": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"LowerArmR": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"UpperArmL": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"LowerArmL": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"Neck": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
-					}
-				},
-				{
-					"frame": 1,
-					"elements": {
-
-					}
-				},
-				{
-					"frame": 3,
-					"elements": {
-						"LowerTorso": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -17.0 }
 					}
 				}
 			]

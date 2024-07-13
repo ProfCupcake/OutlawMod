@@ -6,6 +6,7 @@
 	deadHitboxSize: { x: 0.75, y: 0.5 },
 	eyeHeight: 1.7,
 	attributes: { 
+		hasNightVision: true,
 		reckless: false, 
 		classicVoice: "sounds/voice/harmonica",
 		killedByInfoText: "deadcreature-eaten-looter",
@@ -14,40 +15,14 @@
 	drops: [
 			{
 				type: "item",
-				code: "game:bread-rye-perfect",
-				quantity: { avg: 0.15, var: 0.0 }
+				code: "game:gear-temporal",
+				quantity: { avg: 0.02666, var: 0 }
 			},
 			{
 				type: "item",
-				code: "game:vegetable-carrot",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-turnip",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-onion",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:vegetable-parsnip",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:egg-chicken-raw",
-				quantity: { avg: 0.125, var: 0.0 }
-			},
-			{
-				type: "item",
-				code: "game:club-generic-wood",
-				quantity: { avg: 0.10, var: 0.0 }
-			}
-			
+				code: "game:gear-rusty",
+				quantity: { avg: 0.01, var: 0 }
+			},				
 	],
 	client: {
 		renderer: "Shape",
@@ -192,49 +167,6 @@
 						animationSpeed: 2,
 					},					
 					
-					{
-						code: "shootatentity",
-						entityCodes: ["player","test-dummy", "drifter-*", "wolf-male", "wolf-female", "hyena-male", "hyena-female", "locust-*", "bear-*", "looter", "bandit-*", "yeoman-*", "poacher-*", "deserter-*", "hound-*", "humanoid-villager-*"],
-						priority: 3.5,
-						priorityForCancel: 4,
-						mincooldown: 5000, 
-						maxcooldown: 7000, 
-						minDist: 5,
-						maxDist: 10,
-						maxVertDist: 10,
-						minRangeDistOffTarget: 0.15,
-						maxRangeDistOffTarget: 0.35,
-						maxVelocity: 0.7,
-						newTargetDistOffTarget: 0.5,
-						newTargetZeroingTime: 1.5,
-						damage: 2.0,
-						damageFalloffPercent: 0.25,
-						damageFalloffStartDist: 5,
-						damageFalloffEndDist: 10,
-						projectileItem: "stone-basalt",
-						dummyProjectile: "dummyrock-meteorite-iron",
-						projectileRemainsInWorld: false,
-						projectileBreakOnImpactChance: 0.0,
-						stopIfPredictFriendlyFire: true,
-
-						leadTarget: true,
-            			arcShots: true,
-						fireOnLastKnownPosition: false,
-						lastKnownPositionTimeoutMs: 5000,
-
-						hasLimitedAmmo: true,
-						ammoRegenDuringCombat: true,
-						ammoRegenIntervalMs: 30000,
-						maxAmmo: 1,
-
-						advanceAfterShooting: true,
-
-						durationMs: 500,
-						releaseAtMs: 250,
-						animationSpeed: 1.0,
-						animation: "throwlefthanded"
-					},
-
 					//Agro When Damaged
 					{
 						code: "engageentity",
@@ -336,6 +268,7 @@
 				lightLevelType: "MaxLight",					
 				groupSize: { dist: "stronginvexp", avg: 8, var: 4 },
 				insideBlockCodes: ["game:air", "tallgrass-*", "loosestones-*"],
+				maxY:0.89,
 				minY:0.0,
 				MinDistanceToPlayer: 15,
 				companions: []
