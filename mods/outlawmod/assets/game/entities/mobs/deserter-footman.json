@@ -210,7 +210,7 @@
 						entityCodes: ["test-dummy", "player", "drifter-*", "wolf-male", "wolf-female", "hyena-male", "hyena-female", "locust-*", "bear-*", "looter", "bandit-*", "yeoman-*", "hound-feral", "humanoid-villager-*"],
 						priority: 4.0,
 						damage: 8.0,
-						damageTier: 2,
+						damageTier: 3,
 						damageType: "PiercingAttack",
 						minDist: 3.5,
 						minVerDist: 2.5,

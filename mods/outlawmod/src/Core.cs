@@ -59,10 +59,10 @@ namespace OutlawMod
         public bool OutlawsUseClassicVintageStoryVoices = false;
 
         [ProtoMember(15)]
-        public float SneakAttackDamageMultRanged = 3f;
+        public float SneakAttackDamageMultRanged = 1.5f;
 
         [ProtoMember(16)]
-        public float SneakAttackDamageMultMelee = 5f;
+        public float SneakAttackDamageMultMelee = 2.5f;
 
         [ProtoMember(17)]
         public bool DevMode = false;
@@ -137,6 +137,8 @@ namespace OutlawMod
                 //Initialize our static instance of our spawn evaluator.
                 OutlawSpawnEvaluator.Initialize(api as ICoreServerAPI);
             });
+
+            sapi.Event.PlayerJoin += OnPlayerJoin;
         }
 
         public override void Dispose()
@@ -233,6 +235,14 @@ namespace OutlawMod
         {
             this.config = networkMessage;
             ApplyConfigGlobals();
+        }
+
+        private void OnPlayerJoin(IServerPlayer connectPlayer)
+        {
+            //Set sneak attack values for Expanded Ai Tasks.
+            EntityPlayer playerEnt = connectPlayer.Entity;
+            AiUtility.SetMeleeSneakAttackMultiplierForPlayer( playerEnt, OMGlobalConstants.sneakAttackDamageMultMelee );
+            AiUtility.SetRangedSneakAttackMultiplierForPlayer(playerEnt, OMGlobalConstants.sneakAttackDamageMultRanged);
         }
     }
 }

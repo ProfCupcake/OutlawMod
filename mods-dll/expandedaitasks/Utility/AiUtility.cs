@@ -178,8 +178,9 @@ namespace ExpandedAiTasks
 
         public static bool IsInCombat(Entity ent)
         {
+            //Players are always considered to be in combat because they are not AI.
             if (ent is EntityPlayer)
-                return false;
+                return true;
 
             if (ent is EntityAgent)
             {
@@ -238,6 +239,16 @@ namespace ExpandedAiTasks
             }
 
             return lastInCombatMs;
+        }
+
+        public static void SetRangedSneakAttackMultiplierForPlayer( EntityPlayer player, float rangedSneakAttackMult )
+        {
+            player.Attributes.SetFloat(ExpandedAiTaskConsts.RANGED_SNEAK_ATTACK_ATTRIBUTE_KEY, rangedSneakAttackMult);
+        }
+
+        public static void SetMeleeSneakAttackMultiplierForPlayer( EntityPlayer player, float meleeSneakAttackMult )
+        {
+            player.Attributes.SetFloat(ExpandedAiTaskConsts.MELEE_SNEAK_ATTACK_ATTRIBUTE_KEY, meleeSneakAttackMult);
         }
 
         /*

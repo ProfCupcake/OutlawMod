@@ -12,8 +12,8 @@ namespace EvilBelow
         public static bool claimedLandBlocksOutlawSpawns = true;
         public static bool outlawsUseClassicVintageStoryVoices = false;
         */
-        public static float sneakAttackDamageMultRanged = 3.0f;
-        public static float sneakAttackDamageMultMelee = 5.0f;
+        public static float sneakAttackDamageMultRanged = 1.5f;
+        public static float sneakAttackDamageMultMelee = 2.5f;
         public static bool devMode = false;
         
     }

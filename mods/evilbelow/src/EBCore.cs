@@ -16,7 +16,14 @@ namespace EvilBelow
     [ProtoContract]
     public class EvilBelowConfig
     {
-        
+        [ProtoMember(1)]
+        public float SneakAttackDamageMultRanged = 1.5f;
+
+        [ProtoMember(2)]
+        public float SneakAttackDamageMultMelee = 2.5f;
+
+        [ProtoMember(1)]
+        public bool DevMode = false;
     }
 
     public class EBCore : ModSystem
@@ -31,7 +38,7 @@ namespace EvilBelow
 
         public override double ExecuteOrder()
         {
-            return 0.1;
+            return 0.11;
         }
 
         public override void StartPre(ICoreAPI api)
@@ -88,6 +95,8 @@ namespace EvilBelow
                 //Initialize our static instance of our spawn evaluator.
                 EBSpawnEvaluator.Initialize(api as ICoreServerAPI);
             });
+
+            sapi.Event.PlayerJoin += OnPlayerJoin;
         }
 
         public override void Dispose()
@@ -170,14 +179,14 @@ namespace EvilBelow
 
             //Classic Voice Setting
             OMGlobalConstants.outlawsUseClassicVintageStoryVoices   = config.OutlawsUseClassicVintageStoryVoices;
+            */
 
             //Sneak Attacks
-            OMGlobalConstants.sneakAttackDamageMultRanged           = config.SneakAttackDamageMultRanged;
-            OMGlobalConstants.sneakAttackDamageMultMelee            = config.SneakAttackDamageMultMelee;
+            EBGlobalConstants.sneakAttackDamageMultRanged           = config.SneakAttackDamageMultRanged;
+            EBGlobalConstants.sneakAttackDamageMultMelee            = config.SneakAttackDamageMultMelee;
 
             //Devmode
-            OMGlobalConstants.devMode = config.DevMode;
-            */
+            EBGlobalConstants.devMode = config.DevMode;
 
             //Store an up-to-date version of the config so any new fields that might differ between mod versions are added without altering user values.
             api.StoreModConfig(config, "EvilBelowConfig.json");
@@ -188,6 +197,14 @@ namespace EvilBelow
         {
             this.config = networkMessage;
             ApplyConfigGlobals();
+        }
+
+        private void OnPlayerJoin(IServerPlayer connectPlayer)
+        {
+            //Set sneak attack values for Expanded Ai Tasks.
+            EntityPlayer playerEnt = connectPlayer.Entity;
+            AiUtility.SetMeleeSneakAttackMultiplierForPlayer(playerEnt, EBGlobalConstants.sneakAttackDamageMultMelee);
+            AiUtility.SetRangedSneakAttackMultiplierForPlayer(playerEnt, EBGlobalConstants.sneakAttackDamageMultRanged);
         }
     }
 }

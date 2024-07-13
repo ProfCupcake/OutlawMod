@@ -15,7 +15,7 @@
 	},
 	creativeinventory: { "general": ["*"], "decorative": ["*"] },
 	shape: {
-		base: "block/bone/carcass/humanoid1",
+		base: "game:block/bone/carcass/humanoid1",
 		alternates: [
 			{ base: "block/bone/carcass/humanoid1", rotateY: 45 },
 			{ base: "block/bone/carcass/humanoid1", rotateY: 90 },

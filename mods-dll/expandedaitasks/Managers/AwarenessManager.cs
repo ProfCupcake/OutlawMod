@@ -188,6 +188,10 @@ namespace ExpandedAiTasks.Managers
         //3. This function does many similar things to CanSense, but gets called seperately, we need to determine whether the two should remain seperate.
         public static bool IsAwareOfTarget(Entity searchingEntity, Entity targetEntity, float maxDist, float maxVerDist)
         {
+            //A player is always considered aware.
+            if (searchingEntity is EntityPlayer)
+                return true;
+
             //Bulk ignore entities that we just don't care about, like butterflies.
             if (AiUtility.EntityCodeInList(targetEntity, alwaysIgnoreEntityCodes))
                 return false;
