@@ -267,9 +267,8 @@
 				maxLightLevel: 4,
 				lightLevelType: "MaxLight",					
 				groupSize: { dist: "stronginvexp", avg: 8, var: 4 },
-				insideBlockCodes: ["game:air", "tallgrass-*", "loosestones-*"],
-				maxY:0.89,
-				minY:0.0,
+				insideBlockCodes: ["game:air", "loosestones-*"],
+				maxY:0.95,
 				MinDistanceToPlayer: 15,
 				companions: []
 			}

@@ -259,25 +259,24 @@
 					}
 				]
 			}
-		]
-	},
-	spawnconditions: {
-		runtime: {
-			group: "hostile",
-			tryOnlySurface: false,
-			chance: 0.1,
-			maxQuantity: 8,
-			maxQuantityByGroup: { code: "ghoul-axe", maxQuantity: 2 },
-			spawnCapPlayerScaling: 0.05,
-			"__comment": "Make them spawn away from artifical light",
-			maxLightLevel: 4,
-			lightLevelType: "MaxLight",					
-			groupSize: { dist: "stronginvexp", avg: 1, var: 1 },
-			insideBlockCodes: ["game:air", "tallgrass-*", "loosestones-*"],
-			maxY:0.69,
-			minY:0.0,
-			MinDistanceToPlayer: 15,
-			companions: []
+		],
+		spawnconditions: {
+			runtime: {
+				group: "hostile",
+				tryOnlySurface: false,
+				chance: 0.1,
+				maxQuantity: 8,
+				//maxQuantityByGroup: { code: "ghoul-axe", maxQuantity: 2 },
+				spawnCapPlayerScaling: 0.05,
+				"__comment": "Make them spawn away from artifical light",
+				maxLightLevel: 4,
+				lightLevelType: "MaxLight",					
+				groupSize: { dist: "stronginvexp", avg: 2, var: 1 },
+				insideBlockCodes: ["game:air", "loosestones-*"],
+				maxY:0.85,
+				MinDistanceToPlayer: 15,
+				companions: []
+			}
 		}
 	},
 	sounds: {

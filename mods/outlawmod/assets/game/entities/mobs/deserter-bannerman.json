@@ -18,6 +18,11 @@
 	drops: [
 			{
 				type: "item",
+				code: "game:gear-temporal",
+				quantity: { avg: 1.0, var: 0 }
+			},
+			{
+				type: "item",
 				code: "game:poultice-reed-horsetail",
 				quantity: { avg: 0.4, var: 0 }
 			},
