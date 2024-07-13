@@ -9,7 +9,7 @@
 		hasNightVision: true,
 		reckless: false, 
 		classicVoice: "sounds/voice/harmonica",
-		killedByInfoText: "deadcreature-eaten-looter",
+		killedByInfoText: "evilbelow:deadcreature-eaten-ghoul",
 	},
 
 	drops: [
