@@ -1,6 +1,6 @@
 {
 	code: "dummyarrow",
-	class: "EntityProjectile",
+	class: "EntityAIProjectile",
 	variantgroups: [
 		{ code: "material", states: ["crude", "flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "steel", "meteoriciron" ] },
 	],

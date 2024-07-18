@@ -1,6 +1,6 @@
 {
 	code: "dummyrock",
-	class: "EntityProjectile",
+	class: "EntityAIProjectile",
 	variantgroups: [
 		{ code:"rock", states: ["meteorite-iron"], loadFromProperties: "block/rockwithdeposit" }
 	],

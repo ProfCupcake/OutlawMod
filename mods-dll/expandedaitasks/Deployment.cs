@@ -42,6 +42,7 @@ namespace ExpandedAiTasks
             }
 
             RegisterAiTasksShared();
+            RegisterEntitiesShared(api);
             RegisterEntityBehaviors(api);
 
             hasDeployed = true;
@@ -106,6 +107,11 @@ namespace ExpandedAiTasks
 
             if (!AiTaskRegistry.TaskTypes.ContainsKey("playanimationatrange"))
                 AiTaskRegistry.Register("playanimationatrange", typeof(AiTaskPlayAnimationAtRangeFromTarget));
+        }
+
+        private static void RegisterEntitiesShared( ICoreAPI api )
+        {
+            api.RegisterEntity("EntityAIProjectile", typeof(EntityAIProjectile));
         }
 
         private static void RegisterEntityBehaviors( ICoreAPI api )

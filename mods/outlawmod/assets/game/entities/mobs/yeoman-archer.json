@@ -44,7 +44,7 @@
 			},
 			{
 				type: "item",
-				code: "game:bow-long",
+				code: "game:bow-simple",
 				quantity: { avg: 0.05, var: 0.0 }
 			}
 	],
@@ -264,13 +264,14 @@
 						newTargetDistOffTarget: 0.75,
 						newTargetZeroingTime: 5.0,
 						damage: 4.0,
+						damageTier: 2,
 						damageFalloffPercent: 0.66,
 						damageFalloffStartDist: 18,
 						damageFalloffEndDist: 28,
 						projectileItem: "arrow-copper",
 						dummyProjectile: "dummyarrow-copper",
 						projectileRemainsInWorld: true,
-						projectileBreakOnImpactChance: 0.95,
+						projectileBreakOnImpactChance: 0.80,
 						stopIfPredictFriendlyFire: true,
 
 						leadTarget: true,

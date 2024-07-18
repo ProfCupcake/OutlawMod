@@ -235,6 +235,7 @@
 						newTargetDistOffTarget: 0.5,
 						newTargetZeroingTime: 1.5,
 						damage: 2.0,
+						damageTier: 0,
 						damageFalloffPercent: 0.25,
 						damageFalloffStartDist: 5,
 						damageFalloffEndDist: 10,

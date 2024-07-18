@@ -31,6 +31,7 @@ namespace ExpandedAiTasks
 
         //Damage and Damage Falloff Vars
         float damage = 1.0f;
+        int damageTier = 0;
         float damageFalloffPercent = 0.0f;      //Percentage reduction do base damage when falloff distance hits max.
         float damageFalloffStartDist = -1.0f;   //Distance in blocks where damage falloff begins.
         float damageFalloffEndDist = -1.0f;     //Distance in blocks where damage falloff hits full percent value.
@@ -101,6 +102,7 @@ namespace ExpandedAiTasks
             this.newTargetDistOffTarget = taskConfig["newTargetDistOffTarget"].AsFloat(0.0f);
             this.newTargetZeroingTime = taskConfig["newTargetZeroingTime"].AsFloat(0.0f);
             this.damage = taskConfig["damage"].AsFloat(1.0f);
+            this.damageTier = taskConfig[ "damageTier" ].AsInt(0);
             this.damageFalloffPercent = taskConfig["damageFalloffPercent"].AsFloat(0.0f);
             this.damageFalloffStartDist = taskConfig["damageFalloffStartDist"].AsFloat(-1.0f);
             this.damageFalloffEndDist = taskConfig["damageFalloffEndDist"].AsFloat(-1.0f);
@@ -127,6 +129,7 @@ namespace ExpandedAiTasks
             //Error checking for bad json values.
             Debug.Assert(damageFalloffPercent >= 0.0f && damageFalloffPercent <= 1.0f, "AiTaskValue damageFalloffPercent must be a 0.0 to 1.0 value.");
             Debug.Assert(damageFalloffStartDist < damageFalloffEndDist || damageFalloffEndDist < 0.0f, "AiTaskValue damageFalloffStartDist: " + damageFalloffStartDist + " cannot be greater than damageFalloffEndDist: " + damageFalloffEndDist);
+            Debug.Assert(projectileBreakOnImpactChance >= 0.0f && projectileBreakOnImpactChance <= 1.0, "AiTaskValue projectileBreakOnImpactChance must be a 0.0 to 1.0 value.");
         }
 
 
@@ -394,19 +397,7 @@ namespace ExpandedAiTasks
 
                 float projectileDamage = GetProjectileDamageAfterFalloff(distToTargetSqr);
 
-                int durability = 0;
-                bool survivedImpact = true;
-
-                if (projectileBreakOnImpactChance < 1.0)
-                {
-                    double breakChance = rand.NextDouble();
-                    survivedImpact = breakChance > projectileBreakOnImpactChance;
-                }
-
-                if (projectileRemainsInWorld && survivedImpact)
-                    durability = 1;
-
-                ShootProjectile(shotStartPosition, velocity, projectileDamage, durability, survivedImpact);
+                ShootProjectile(shotStartPosition, velocity, projectileDamage, damageTier, projectileBreakOnImpactChance);
 
                 lastShotTime = world.ElapsedMilliseconds;
 
@@ -567,25 +558,20 @@ namespace ExpandedAiTasks
             return false;
         }
 
-        protected void ShootProjectile( Vec3d shotStartPosition, Vec3d velocity, float projectileDamage, int durability, bool survivedImpact )
+        protected void ShootProjectile( Vec3d shotStartPosition, Vec3d velocity, float projectileDamage, int projectileDamageTier, float breakChance )
         {
             //Implementation Note: Since Vintage Story can have per-entity gravity diffrences and they also have air drag, I decided to make a dummy projectile entity that has physics settings ideal for the simplest version of the trajectory calculation.
             //This dummy projectile sets its shape and materials to match the assets of a real projectile item that the ai is "fireing." The dummy projectile uses the real projectile item type for its item stack, so that the player picks up the real projectile,
             //and not the dummy when it lands in the world.
 
             EntityProperties dummyType = entity.World.GetEntityType(new AssetLocation(dummyProjectile));
-            EntityProjectile projectile = entity.World.ClassRegistry.CreateEntity(dummyType) as EntityProjectile;
+            EntityAIProjectile projectile = entity.World.ClassRegistry.CreateEntity(dummyType) as EntityAIProjectile;
             projectile.FiredBy = entity;
             projectile.Damage = projectileDamage;
+            projectile.damageTier = projectileDamageTier;
             projectile.ProjectileStack = new ItemStack(entity.World.GetItem(new AssetLocation(projectileItem)));
 
-            if (durability == 0)
-                projectile.ProjectileStack.Attributes.SetFloat("durability", durability);
-
-            int testDuribility = projectile.ProjectileStack.Collectible.GetRemainingDurability(projectile.ProjectileStack);
-
-            projectile.DropOnImpactChance = survivedImpact && projectileRemainsInWorld ? 1.0f : 0.0f;
-            //projectile.Weight = 0.0f;
+            projectile.DropOnImpactChance = projectileRemainsInWorld ? 1.0f - projectileBreakOnImpactChance : 0.0f;
 
             projectile.ServerPos.SetPos(shotStartPosition);
             projectile.ServerPos.Motion.Set(velocity);
