@@ -158,7 +158,7 @@
 						code: "melee",
 						entityCodes: ["player", "drifter-*", "wolf-male", "wolf-female", "hyena-male", "hyena-female", "locust-*", "bear-*", "looter", "deserter-*", "hound-feral", "humanoid-villager-*"],
 						priority: 4.0,
-						damage: 4.5,
+						damage: 6.0,
 						damageTier: 2,
 						damageType: "SlashingAttack",
 						minDist: 1.5,

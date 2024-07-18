@@ -63,6 +63,13 @@
     "condition": {"when": "enableDeserters", "isValue": "false"}
 },
 {
+    "file": "entities/mobs/deserter-knight.json",
+    "op": "add",
+    "path": "/enabled",
+    "value": false,
+    "condition": {"when": "enableDeserters", "isValue": "false"}
+},
+{
     "file": "entities/mobs/deserter-bannerman.json",
     "op": "add",
     "path": "/enabled",

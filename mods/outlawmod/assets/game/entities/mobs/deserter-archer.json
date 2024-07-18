@@ -188,7 +188,7 @@
 							{ code: "yeoman-*", fearWeight: 0.75},
 							{ code: "hound-feral", fearWeight: 0.05},
 							{ code: "deserter-*", fearWeight: -0.1},
-							{ code: "deserter-bannerman", fearWeight: -10.0},
+							{ code: "deserter-bannerman-*", fearWeight: -10.0},
 						],
 
 						itemStackSourcesOfFear: [
@@ -233,7 +233,7 @@
 						maxVelocity: 0.9,
 						newTargetDistOffTarget: 0.75,
 						newTargetZeroingTime: 5.0,
-						damage: 6.0,
+						damage: 8.0,
 						damageFalloffPercent: 0.66,
 						damageFalloffStartDist: 18,
 						damageFalloffEndDist: 28,
@@ -346,7 +346,7 @@
 				tryOnlySurface: true,
 				chance: 0.0006,
 				maxQuantity: 8,
-				maxQuantityByGroup: { code: "deserter-archer", maxQuantity: 6, code: "deserter-footman", maxQuantity: 6, code: "deserter-bannerman", maxQuantity: 1 },
+				maxQuantityByGroup: { code: "deserter-archer", maxQuantity: 6, code: "deserter-footman", maxQuantity: 6 },
 				spawnCapPlayerScaling: 0.05,
 				"__comment": "Make them spawn away from artifical light and only at night/as the sun sets",
 				maxLightLevel: 3,
@@ -358,7 +358,7 @@
 				minRain: 0,
 				minForestOrShrubs: 0.25,
 				MinDistanceToPlayer: 50,
-				companions: ["deserter-footman", "deserter-bannerman"],
+				companions: ["deserter-footman"],
 			}
 		}
 	},

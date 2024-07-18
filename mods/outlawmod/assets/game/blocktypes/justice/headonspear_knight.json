@@ -1,0 +1,91 @@
+{
+	code: "headonspear",
+	class: "BlockHeadOnSpear",
+	entityClass: "BlockEntityOutlawSpawnBlocker",
+	"storageFlags": 257,
+	attributesByType:
+	{
+		"*-deserter-knight-*": {
+			handbook: {
+				groupBy: ["headonspear-*"],
+				extraSections: [
+					{ title: "headonspear-handbook-help-title", text: "headonspear-deserter-knight-handbook-help-text" }
+				]
+			},
+			outlawSpawnBlockRadius: 40
+		}
+	},
+	variantgroups: [
+		{ code: "type", states: ["deserter-knight"]},
+		{ code: "material", states: ["chert", "granite", "andesite", "basalt", "obsidian", "peridotite", "flint", 
+			"copper", "tinbronze", "bismuthbronze", "blackbronze", "ornategold", "ornatesilver", "hacking" ] },
+		{ loadFromProperties: "abstract/horizontalorientation" }
+	],
+	creativeinventory: { "general": ["*-north"], "construction": ["*-north"] },
+	blockmaterial: "Wood",
+	resistance: 1.5,
+	lightAbsorption: 0,
+    shapeByType: {
+		"*-north": { base: "block/justice/head_on_spear_knight1", rotateY:90, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:90 }, { base: "block/justice/head_on_spear_knight3", rotateY:90 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] },
+		"*-east": { base: "block/justice/head_on_spear_knight1", rotateY:0, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:0 }, { base: "block/justice/head_on_spear_knight3", rotateY:0 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] },
+		"*-south": { base: "block/justice/head_on_spear_knight1", rotateY:270, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:270 }, { base: "block/justice/head_on_spear_knight3", rotateY:270 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] },
+		"*-west": { base: "block/justice/head_on_spear_knight1", rotateY:180, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:180 }, { base: "block/justice/head_on_spear_knight3", rotateY:180 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] }
+	},
+	texturesByType: {
+		"*-deserter-knight-*": {
+			"head": { base: "item/justice/dead_outlaw/deserter_knight1", alternates: [ { base: "item/justice/dead_outlaw/deserter_knight2" }, { base: "item/justice/dead_outlaw/deserter_knight3" }, { base: "item/justice/dead_outlaw/deserter_knight4" } ] },
+			"material": { base: "item/tool/material/{material}" }
+		}
+	},
+	sidesolidByType: {	
+		"*-north": { all:false },
+		"*-west": { all:false },
+		"*-south": { all:false },
+		"*-east": { all:false }
+	},
+	sideopaque :  { all:false },
+	sounds: {
+		"hit": "block/planks",
+		"break": "block/planks",
+		"place": "block/planks",
+		"walk": "walk/wood"
+	},
+    collisionboxes: [
+		{ x1: 0.4375, y1: 0, z1: 0.4375, x2: 0.562, y2: 2.8125, z2: 0.5625, rotateYByType: {  "*-north": 90, "*-east": 0, "*-south": 270 , "*-west": 180 } },
+		{ x1: 0.375, y1: 2.125, z1: 0.5625, x2: 0.875, y2: 2.5, z2: 0.8125, rotateYByType: {  "*-north": 90, "*-east": 0, "*-south": 270 , "*-west": 180 } }
+	],
+	selectionboxbytype: {
+		"*-north":  { x1: 0.47, y1: 0, z1: 0.455, x2: 0.56, y2: 2.8125, z2: 0.5465 , rotateY: 270 },
+		"*-west": { x1: 0.47, y1: 0, z1: 0.455, x2: 0.56, y2: 2.8125, z2: 0.5465 , rotateY: 0 },
+		"*-south": { x1: 0.47, y1: 0, z1: 0.455, x2: 0.56, y2: 2.8125, z2: 0.5465 , rotateY: 90 },
+		"*-east": { x1: 0.47, y1: 0, z1: 0.455, x2: 0.56, y2: 2.8125, z2: 0.5465 , rotateY: 180 }
+	},
+	maxStackSize: 1,
+	materialDensity: 600,
+
+	heldRightTpIdleAnimation: "holdinglanternrighthand",
+	heldLeftTpIdleAnimation: "holdinglanternlefthand",
+
+	heldTpUseAnimation: "twohandplaceblock",
+	guiTransform: {
+		translation: { x: -2, y: 134, z: 0 },
+		rotation: { x: 1, y: -180, z: 0 },
+		scale: 2.84
+	},
+	fpHandTransform: {
+		translation: { x: 0, y: -1.15, z: 0.5 },
+		rotation: { x: -22, y: -31, z: 0 },
+		scale: 2.23
+	},
+	tpHandTransform: {
+		translation: { x: 0.2, y: -0.4, z: -0.5 },
+		rotation: { x: -89, y: 0, z: -98 },
+		scale: 1
+	},
+	tpOffHandTransform: {
+		translation: { x: 0.2, y: -0.4, z: -0.5 },
+		rotation: { x: -91, y: 0, z: -86 },
+		scale: 1
+	},
+	drops: [{ type: "block", code: "headonspear-{type}-{material}-north"}]
+}

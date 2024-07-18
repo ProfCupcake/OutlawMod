@@ -8,19 +8,38 @@
 	attributes: { 
 		reckless: false, 
 		classicVoice: "sounds/voice/tuba",
-		killedByInfoText: "deadcreature-eaten-deserterbannerman",
-		companions: [
-			{ code: "deserter-archer", countMin: 4.0, countMax: 6.0 },
-			{ code: "deserter-footman", countMin: 4.0, countMax: 6.0 },
-		]
+		killedByInfoText: "deadcreature-eaten-deserterbannerman"
 	},
-
-	drops: [
-			{
-				type: "item",
-				code: "game:gear-temporal",
-				quantity: { avg: 1.0, var: 0 }
+	attributesByType: {
+		
+			"*-forest":{
+				companions: [
+					{ code: "deserter-archer", countMin: 8.0, countMax: 10.0 },
+					{ code: "deserter-footman", countMin: 2.0, countMax: 4.0 },
+					{ code: "deserter-knight", countMin: 1.0, countMax: 1.0 },
+				]
 			},
+
+			"*-slayer":{
+				companions: [
+					{ code: "deserter-archer", countMin: 2.0, countMax: 4.0 },
+					{ code: "deserter-footman", countMin: 6.0, countMax: 8.0 },
+					{ code: "deserter-knight", countMin: 3.0, countMax: 3.0 },
+				]
+			},
+
+			"*":{
+			companions: [
+				{ code: "deserter-archer", countMin: 4.0, countMax: 6.0 },
+				{ code: "deserter-footman", countMin: 4.0, countMax: 6.0 },
+				{ code: "deserter-knight", countMin: 1.0, countMax: 3.0 },
+			]
+			}
+	},
+	variantgroups: [
+		{ code: "type", states: ["pilgrim", "heart", "forest", "lutrell", "slayer"]}
+	],
+	drops: [
 			{
 				type: "item",
 				code: "game:poultice-reed-horsetail",
@@ -55,9 +74,31 @@
 	client: {
 		renderer: "Shape",
 		shape: { base: "entity/land/deserter-bannerman" },
-		textures: {
-			"deserter": { base: "entity/bandit/deserter_footman1", alternates: [ { base: "entity/bandit/deserter_footman2" }, { base: "entity/bandit/deserter_footman3" }, { base: "entity/bandit/deserter_footman4" } ] },
-			"banner": { base: "item/weapon/deserter_banner_01", alternates: [ {base: "item/weapon/deserter_banner_02"} ] },
+		texturesByType: {
+			"*-pilgrim":{
+				"deserter": { base: "entity/bandit/deserter_footman1", alternates: [ { base: "entity/bandit/deserter_footman2" }, { base: "entity/bandit/deserter_footman3" }, { base: "entity/bandit/deserter_footman4" }] },
+				"banner": { base: "item/weapon/deserter_banner_01", alternates: [ {base: "item/weapon/deserter_banner_01"}, {base: "item/weapon/deserter_banner_01"}, {base: "item/weapon/deserter_banner_01"} ] }
+			},
+
+			"*-heart":{
+				"deserter": { base: "entity/bandit/deserter_footman1", alternates: [ { base: "entity/bandit/deserter_footman2" }, { base: "entity/bandit/deserter_footman3" }, { base: "entity/bandit/deserter_footman4" }] },
+				"banner": { base: "item/weapon/deserter_banner_02", alternates: [ {base: "item/weapon/deserter_banner_02"}, {base: "item/weapon/deserter_banner_02"}, {base: "item/weapon/deserter_banner_02"} ] }
+			},
+
+			"*-forest":{
+				"deserter": { base: "entity/bandit/deserter_footman1", alternates: [ { base: "entity/bandit/deserter_footman2" }, { base: "entity/bandit/deserter_footman3" }, { base: "entity/bandit/deserter_footman4" }] },
+				"banner": { base: "item/weapon/deserter_banner_03", alternates: [ {base: "item/weapon/deserter_banner_03"}, {base: "item/weapon/deserter_banner_03"}, {base: "item/weapon/deserter_banner_03"} ] }
+			},
+
+			"*-lutrell":{
+				"deserter": { base: "entity/bandit/deserter_footman1", alternates: [ { base: "entity/bandit/deserter_footman2" }, { base: "entity/bandit/deserter_footman3" }, { base: "entity/bandit/deserter_footman4" }] },
+				"banner": { base: "item/weapon/deserter_banner_04", alternates: [ {base: "item/weapon/deserter_banner_04"}, {base: "item/weapon/deserter_banner_04"}, {base: "item/weapon/deserter_banner_04"} ] }
+			},
+
+			"*-slayer":{
+				"deserter": { base: "entity/bandit/deserter_footman1", alternates: [ { base: "entity/bandit/deserter_footman2" }, { base: "entity/bandit/deserter_footman3" }, { base: "entity/bandit/deserter_footman4" }] },
+				"banner": { base: "item/weapon/deserter_banner_05", alternates: [ {base: "item/weapon/deserter_banner_05"}, {base: "item/weapon/deserter_banner_05"}, {base: "item/weapon/deserter_banner_05"} ] }
+			}
 		},
 		behaviors: [
 			{ code: "lodrepulseagents" }, //Our custom repulse agents behavior with tick LODing based on player distance.
@@ -147,6 +188,11 @@
 					code: "outlawhead-deserter-footman",
 					quantity: { avg: 1, var: 0 }
 				},
+				{
+					type: "block",
+					code: "bannercaptured-{type}-north",
+					quantity: { avg: 1, var: 0 }
+				},
 
 				]
 			},
@@ -186,7 +232,7 @@
 							{ code: "bandit-*", fearWeight: 0.1},
 							{ code: "yeoman-*", fearWeight: 0.1},
 							{ code: "deserter-*", fearWeight: -0.1},
-							{ code: "deserter-bannerman", fearWeight: -10.0},
+							{ code: "deserter-bannerman-*", fearWeight: -10.0},
 							{ code: "hound-feral", fearWeight: 0.05},
 						],
 						itemStackSourcesOfFear: [
@@ -386,7 +432,7 @@
 				tryOnlySurface: true,
 				chance: 0.0004,
 				maxQuantity: 1,
-				maxQuantityByGroup: { code: "deserter-bannerman", maxQuantity: 1 },
+				maxQuantityByGroup: { code: "deserter-bannerman-*", maxQuantity: 1 },
 				spawnCapPlayerScaling: 0.05,
 				"__comment": "Make them spawn away from artifical light and only at night/as the sun sets",
 				maxLightLevel: 3,

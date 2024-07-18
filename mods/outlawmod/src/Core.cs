@@ -156,6 +156,7 @@ namespace OutlawMod
         {
             api.RegisterBlockClass("BlockStocks", typeof(BlockStocks));
             api.RegisterBlockClass("BlockHeadOnSpear", typeof(BlockHeadOnSpear));
+            api.RegisterBlockClass("BlockBannerCaptured", typeof(BlockBannerCaptured));
         }
 
         private void RegisterBlockEntitiesShared()

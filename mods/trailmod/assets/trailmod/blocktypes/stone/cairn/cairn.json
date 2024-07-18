@@ -57,7 +57,7 @@
 	},
 	lightAbsorption: 0,
 	collisionSelectionBox: { x1: 0.125, y1: 0, z1: 0.125, x2: 0.8125, y2: 0.9375, z2: 0.875 },
-	maxStackSize: 1,
+	maxStackSize: 8,
 	guiTransform: {
 		translation: { x: -2.5, y: -2.5, z: 0 },
 		rotation: { x: -22.59375, y: 82, z: 0 },

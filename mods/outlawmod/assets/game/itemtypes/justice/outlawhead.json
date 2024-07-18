@@ -69,16 +69,34 @@
 			    rotation: { x: 0, y: 90, z: 0 },
 			    origin: { x: 0.5, y: 0, z: 0.5 }
             }
+        },
+		"*-deserter-knight": {
+            currency: {
+                value: 1
+            },
+            displaycaseable: true, 
+		    shelvable: true,
+		    onDisplayTransform: {
+			    rotation: { x: 0, y: 90, z: 0 },
+			    origin: { x: 0.5, y: 0, z: 0.5 }
+            }
         }
 	},
 	maxstacksize: 2,
 	heldRightTpIdleAnimation: "holdinglanternrighthand",
 	heldLeftTpIdleAnimation: "holdinglanternlefthand",
 	variantgroups: [
-		{ code: "type", states: ["looter", "poacher", "brigand", "yeoman", "deserter-archer", "deserter-footman" ] }
+		{ code: "type", states: ["looter", "poacher", "brigand", "yeoman", "deserter-archer", "deserter-footman", "deserter-knight" ] }
 	],
-	shape: { base: "item/justice/outlawhead" },
-	//texture: { base: "item/justice/dead_outlaw/{type}" },
+	shapeByType: { 
+
+		"*-deserter-knight": {
+			base: "item/justice/outlawhead_knight" 
+		},
+		"*": {
+			base: "item/justice/outlawhead" 
+		}
+	},
 	creativeinventory: { "general": ["*"], "items": ["*"] },
 	texturesByType: {
 		"*-looter": {
@@ -98,6 +116,9 @@
 		},
 		"*-deserter-footman": {
 			"head": { base: "item/justice/dead_outlaw/deserter_footman1", alternates: [ { base: "item/justice/dead_outlaw/deserter_footman2" }, { base: "item/justice/dead_outlaw/deserter_footman3" }, { base: "item/justice/dead_outlaw/deserter_footman4" } ] },
+		},
+		"*-deserter-knight": {
+			"head": { base: "item/justice/dead_outlaw/deserter_knight1", alternates: [ { base: "item/justice/dead_outlaw/deserter_knight2" }, { base: "item/justice/dead_outlaw/deserter_knight3" }, { base: "item/justice/dead_outlaw/deserter_knight4" } ] },
 		}
 	},
 	guiTransform: {

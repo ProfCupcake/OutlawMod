@@ -68,7 +68,6 @@
 	],
 	creativeinventory: { "general": ["*-north"], "construction": ["*-north"] },
 	blockmaterial: "Wood",
-	shape: { base: "block/justice/head_on_spear" },
 	resistance: 1.5,
 	lightAbsorption: 0,
     shapeByType: {
@@ -101,7 +100,7 @@
 		"*-deserter-footman-*": {
 			"head": { base: "item/justice/dead_outlaw/deserter_footman1", alternates: [ { base: "item/justice/dead_outlaw/deserter_footman2" }, { base: "item/justice/dead_outlaw/deserter_footman3" }, { base: "item/justice/dead_outlaw/deserter_footman4" } ] },
 			"material": { base: "item/tool/material/{material}" }
-		},
+		}
 	},
 	sidesolidByType: {	
 		"*-north": { all:false },

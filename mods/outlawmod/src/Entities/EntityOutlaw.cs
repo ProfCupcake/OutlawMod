@@ -103,12 +103,14 @@ namespace OutlawMod
         {
             base.OnEntityLoaded();
 
-            //Build our list of companions if it exists.
-            BuildCompanionSpawnQueue();
+            if ( Api.Side == EnumAppSide.Server) 
+            { 
+                //Build our list of companions if it exists.
+                BuildCompanionSpawnQueue();
 
-            if (companionSpawnQueue.Count > 0)
-                AttemptSpawnCompanion(0f);
-
+                if (companionSpawnQueue.Count > 0)
+                    AttemptSpawnCompanion(0f);
+            }
         }
 
         /// <summary>
@@ -130,11 +132,14 @@ namespace OutlawMod
                 }
             }
 
-            //Build our list of companions if it exists.
-            BuildCompanionSpawnQueue();
+            if ( Api.Side == EnumAppSide.Server ) 
+            { 
+                //Build our list of companions if it exists.
+                BuildCompanionSpawnQueue();
 
-            if ( companionSpawnQueue.Count > 0 )
-                AttemptSpawnCompanion(0f);
+                if ( companionSpawnQueue.Count > 0 )
+                    AttemptSpawnCompanion(0f);
+            } 
         }
 
         protected void AttemptSpawnCompanion(float dt)

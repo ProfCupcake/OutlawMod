@@ -192,7 +192,7 @@
 							{ code: "bandit-*", fearWeight: 0.1},
 							{ code: "yeoman-*", fearWeight: 0.1},
 							{ code: "deserter-*", fearWeight: -0.1},
-							{ code: "deserter-bannerman", fearWeight: -10.0},
+							{ code: "deserter-bannerman-*", fearWeight: -10.0},
 							{ code: "hound-feral", fearWeight: 0.05},
 						],
 						itemStackSourcesOfFear: [
@@ -209,7 +209,7 @@
 						code: "melee",
 						entityCodes: ["test-dummy", "player", "drifter-*", "wolf-male", "wolf-female", "hyena-male", "hyena-female", "locust-*", "bear-*", "looter", "bandit-*", "yeoman-*", "hound-feral", "humanoid-villager-*"],
 						priority: 4.0,
-						damage: 8.0,
+						damage: 12.0,
 						damageTier: 3,
 						damageType: "PiercingAttack",
 						minDist: 3.5,
@@ -248,7 +248,7 @@
 						pursueSpeed: 0.035,
 						pursueRange: 40,
 						pursueAnimation: "sprint",
-						engageSpeed: 0.020,
+						engageSpeed: 0.025,
 						engageRange: 8,
 						engageAnimation: "walkattackready",
 
@@ -279,7 +279,7 @@
 						pursueSpeed: 0.035,
 						pursueRange: 22,
 						pursueAnimation: "sprint",
-						engageSpeed: 0.020,
+						engageSpeed: 0.025,
 						engageRange: 8,
 						engageAnimation: "walkattackready",
 
