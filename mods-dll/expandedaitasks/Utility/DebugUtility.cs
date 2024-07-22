@@ -184,5 +184,24 @@ namespace ExpandedAiTasks
             */
         }
 
+        //Note: This function networks a debug message, use this sparingly because it can cause massive hitches.
+        public static void DebugLogToPlayerChat(ICoreServerAPI sapi, string text)
+        {
+            string message = "[Expanded AI Tasks Debug] " + text;
+
+            IPlayer[] playersOnline = sapi.World.AllOnlinePlayers;
+            foreach (IPlayer player in playersOnline)
+            {
+                IServerPlayer serverPlayer = player as IServerPlayer;
+                serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup, message, EnumChatType.Notification);
+            }
+        }
+
+        public static void DebugLogMessage(ICoreAPI api, string text)
+        {
+            string message = "[Expanded AI Tasks Debug] " + text;
+            api.Logger.Debug(message);
+        }
+
     }
 }

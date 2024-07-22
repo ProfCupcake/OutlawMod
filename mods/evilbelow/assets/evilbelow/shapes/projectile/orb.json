@@ -1,0 +1,66 @@
+{
+	"editor": {
+		"collapsedPaths": "Root/LowerTorso/UpperTorso/UpperArmR/LowerArmR/origin/billhook/ferule,Root/LowerTorso/UpperTorso/Neck/Head/mouth,Root/LowerTorso/UpperTorso/UpperArmR/LowerArmR/billhook,Root/LowerTorso/UpperTorso/UpperArmR/LowerArmR/origin/billhook/handle,Root/LowerTorso/UpperTorso/Neck/Head/R eyebrow 1,Root/LowerTorso/UpperTorso/Neck/Head/L eyebrow 1,Root/LowerTorso/UpperTorso/UpperArmR/LowerArmR/origin/voulge/ferule,Root/LowerTorso/UpperTorso/Neck/Head/L eye2,Root/LowerTorso/UpperTorso/Neck/Head/R eye",
+		"allAngles": true,
+		"entityTextureMode": false
+	},
+	"textureWidth": 64,
+	"textureHeight": 64,
+	"textureSizes": {
+		"seraph": [64,64]
+	},
+	"textures": {
+		"orb": "entity/creature/green_eyes",
+		"string": "item/tool/material/string"
+	},
+	"elements": [
+		{
+			"name": "Origin",
+			"from": [ 9.5, 0.5, 8.0 ],
+			"to": [ 9.5, 0.5, 8.0 ],
+			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
+			"faces": {
+				"north": { "texture": "#string", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+				"east": { "texture": "#string", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+				"south": { "texture": "#string", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+				"west": { "texture": "#string", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+				"up": { "texture": "#string", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+				"down": { "texture": "#string", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+			},
+			"children": [
+				{
+					"name": "Orb1",
+					"from": [ -3.0259, -1.9993, -1.5 ],
+					"to": [ -0.0259, 1.0007, 1.5 ],
+					"rotationOrigin": [ -1.5259, -0.4993, 0.0 ],
+					"faces": {
+						"north": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+						"east": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+						"south": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+						"west": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+						"up": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] },
+						"down": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255, "windMode": [-1,-1,-1,-1] }
+					},
+					"children": [
+						{
+							"name": "Orb2",
+							"from": [ 0.0, 0.0, 0.0 ],
+							"to": [ 3.0, 3.0, 3.0 ],
+							"rotationOrigin": [ 1.5, 1.5, 1.5 ],
+							"rotationX": 90.0,
+							"rotationY": 45.0,
+							"rotationZ": 45.0,
+							"faces": {
+								"north": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255 },
+								"east": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255 },
+								"south": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255 },
+								"west": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255 },
+								"up": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255 },
+								"down": { "texture": "#orb", "uv": [ 0.0, 0.0, 8.0, 8.0 ], "glow": 255 }
+							}
+						}
+					]
+				}
+			]
+		}
+	]}

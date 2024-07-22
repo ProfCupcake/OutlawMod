@@ -112,6 +112,7 @@ namespace ExpandedAiTasks
         private static void RegisterEntitiesShared( ICoreAPI api )
         {
             api.RegisterEntity("EntityAIProjectile", typeof(EntityAIProjectile));
+            api.RegisterEntity("EntityAIProjectileExplosive", typeof(EntityAIProjectileExplosive));
         }
 
         private static void RegisterEntityBehaviors( ICoreAPI api )

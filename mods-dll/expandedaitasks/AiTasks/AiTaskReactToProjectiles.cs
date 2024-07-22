@@ -11,6 +11,7 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 using ExpandedAiTasks.Managers;
+using System.Timers;
 
 namespace ExpandedAiTasks
 {
@@ -25,6 +26,9 @@ namespace ExpandedAiTasks
 
         private EntityProjectile reactionProjectile = null;
         private List<EntityProjectile> knownProjectiles = new List<EntityProjectile>();
+
+        private EntityAIProjectile reactionAIProjectile = null;
+        private List<EntityAIProjectile> knownAIProjectiles = new List<EntityAIProjectile>();
 
         public AiTaskReactToProjectiles(EntityAgent entity) : base(entity)
         {
@@ -42,8 +46,7 @@ namespace ExpandedAiTasks
         public override bool ShouldExecute()
         {
             reactionProjectile = null;
-
-            
+            reactionAIProjectile = null;
 
             if (lastReactTime + reactDBounce > entity.World.ElapsedMilliseconds)
                 return false;
@@ -56,12 +59,21 @@ namespace ExpandedAiTasks
 
             if ( reactionProjectile != null) 
             {
-                if (reactionProjectile != null)
+                 EntityTargetPairing targetPairing = new EntityTargetPairing(entity, reactionProjectile.FiredBy, null, null, null);
+                 entity.Notify("attackEntity", targetPairing);
+
+                 AiUtility.TryNotifyHerdMembersToAttack(entity, reactionProjectile.FiredBy, null, null, null, AiUtility.GetHerdAlertRangeForEntity(entity), true);
+                 lastReactTime = entity.World.ElapsedMilliseconds;
+            }
+            else
+            {
+                reactionAIProjectile = CheckForAIProjectiles();
+                if (reactionAIProjectile != null) 
                 {
-                    EntityTargetPairing targetPairing = new EntityTargetPairing(entity, reactionProjectile.FiredBy, null, null, null);
+                    EntityTargetPairing targetPairing = new EntityTargetPairing(entity, reactionAIProjectile.firedBy, null, null, null);
                     entity.Notify("attackEntity", targetPairing);
 
-                    AiUtility.TryNotifyHerdMembersToAttack(entity, reactionProjectile.FiredBy, null, null, null, AiUtility.GetHerdAlertRangeForEntity(entity), true);
+                    AiUtility.TryNotifyHerdMembersToAttack(entity, reactionAIProjectile.firedBy, null, null, null, AiUtility.GetHerdAlertRangeForEntity(entity), true);
                     lastReactTime = entity.World.ElapsedMilliseconds;
                 }
             }
@@ -127,10 +139,54 @@ namespace ExpandedAiTasks
             return bestProjectile;
         }
 
+        private EntityAIProjectile CheckForAIProjectiles()
+        {
+            knownAIProjectiles.Clear();
+
+            List<EntityAIProjectile> projectilesInRange = EntityManager.GetAllEntityAIProjectilesInFlightWithinRangeOfPos(entity.ServerPos.XYZ, reactRange);
+            knownAIProjectiles = FilterAIProjectiles(projectilesInRange);
+
+            EntityAIProjectile bestAIProjectile = null;
+            foreach (EntityAIProjectile aiProjectile in knownAIProjectiles)
+            {
+                if (bestAIProjectile == null)
+                {
+                    bestAIProjectile = aiProjectile;
+                    continue;
+                }
+
+                if (aiProjectile.firedBy is EntityPlayer)
+                {
+                    if (bestAIProjectile.firedBy is EntityPlayer)
+                    {
+                        float bestDistSqr = bestAIProjectile.ServerPos.SquareDistanceTo(bestAIProjectile.firedBy.ServerPos);
+                        float otherDistSqr = aiProjectile.ServerPos.SquareDistanceTo(aiProjectile.firedBy.ServerPos);
+
+                        if (bestDistSqr > otherDistSqr)
+                            bestAIProjectile = aiProjectile;
+                    }
+                    else
+                    {
+                        bestAIProjectile = aiProjectile;
+                    }
+                }
+                else
+                {
+                    float bestDistSqr = bestAIProjectile.ServerPos.SquareDistanceTo(bestAIProjectile.firedBy.ServerPos);
+                    float otherDistSqr = aiProjectile.ServerPos.SquareDistanceTo(aiProjectile.firedBy.ServerPos);
+
+                    if (bestDistSqr > otherDistSqr)
+                        bestAIProjectile = aiProjectile;
+                }
+            }
+
+            return bestAIProjectile;
+        }
+
+        List<EntityProjectile> filteredProjectiles = new List<EntityProjectile>();
         private List<EntityProjectile> FilterProjectiles(List<EntityProjectile> projectiles )
         {
-            List<EntityProjectile> filteredProjectiles = new List<EntityProjectile>();
-
+            filteredProjectiles.Clear();
             foreach (EntityProjectile projectile in projectiles)
             {
                 if (projectile.FiredBy != null )
@@ -149,6 +205,31 @@ namespace ExpandedAiTasks
             }
             
             return filteredProjectiles;
+        }
+
+        List<EntityAIProjectile> filteredAIProjectiles = new List<EntityAIProjectile>();
+        private List<EntityAIProjectile> FilterAIProjectiles(List<EntityAIProjectile> aiProjectiles)
+        {
+            filteredAIProjectiles.Clear();
+
+            foreach (EntityAIProjectile aiProjectile in aiProjectiles)
+            {
+                if (aiProjectile.firedBy != null)
+                {
+                    if (!IsTargetableEntity(aiProjectile.firedBy, SKIP_BEHAVIOR_IF_PLAYER_BEYOND_RANGE))
+                        continue;
+
+                    if (aiProjectile.ApplyGravity)
+                    {
+                        if (AwarenessManager.IsAwareOfTarget(entity, aiProjectile, reactRange, reactRange))
+                        {
+                            filteredAIProjectiles.Add(aiProjectile);
+                        }
+                    }
+                }
+            }
+
+            return filteredAIProjectiles;
         }
     }
 }

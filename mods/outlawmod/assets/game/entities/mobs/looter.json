@@ -258,7 +258,7 @@
 						advanceAfterShooting: true,
 
 						durationMs: 500,
-						releaseAtMs: 250,
+						releaseAtFrame: 10,
 						animationSpeed: 1.0,
 						animation: "throwlefthanded"
 					},

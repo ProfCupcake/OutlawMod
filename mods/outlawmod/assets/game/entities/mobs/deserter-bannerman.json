@@ -415,7 +415,7 @@
 		],
 		spawnconditions: {
 			worldgen: {
-				TriesPerChunk: { avg: 0.007, var: 0 },
+				TriesPerChunk: { avg: 0.00115, var: 0 },
 				tryOnlySurface: true,
 				lightLevelType: "MaxTimeOfDayLight",					
 				groupSize: { dist: "stronginvexp", avg: 1, var: 0 },

@@ -15,7 +15,7 @@ namespace ExpandedAiTasks
         const float FRIENDLY_FIRE_DETECTION_ANGLE = 5.0f;
 
         int durationMs;
-        int releaseAtMs;
+        int releaseAtFrame = 0;
 
         float minDist = 3f;
         float maxDist = 15f;
@@ -90,7 +90,7 @@ namespace ExpandedAiTasks
             base.LoadConfig(taskConfig, aiConfig);
 
             this.durationMs = taskConfig["durationMs"].AsInt(1500);
-            this.releaseAtMs = taskConfig["releaseAtMs"].AsInt(1000);
+            this.releaseAtFrame = taskConfig["releaseAtFrame"].AsInt(0);
             this.mincooldown = taskConfig["mincooldown"].AsInt(0);
             this.maxcooldown = taskConfig["maxcooldown"].AsInt(0);
             this.minDist = taskConfig["minDist"].AsFloat(3f);
@@ -266,7 +266,7 @@ namespace ExpandedAiTasks
 
             //Play sound for preparing to shoot.
             if ( !entity.Swimming )
-                entity.PlayEntitySound("drawSound", null, true, maxDist);
+                entity.PlayEntitySound("drawSound", null, true, maxDist + 5 );
 
         }
 
@@ -341,7 +341,7 @@ namespace ExpandedAiTasks
             if (targetEntity != null && entity.ServerPos.SquareDistanceTo(targetEntity.ServerPos.XYZ) <= minDist * minDist)
                 return false;
 
-            if (accum > releaseAtMs / 1000f && !didShoot)
+            if (AnimationHasReachedOrPassedFireFrame() && !didShoot)
             {
                 didShoot = true;
 
@@ -409,6 +409,30 @@ namespace ExpandedAiTasks
             }
 
             return accum < durationMs / 1000f && !stopNow;
+        }
+
+        private bool AnimationHasReachedOrPassedFireFrame()
+        {
+            if (releaseAtFrame == 0)
+                return true;
+
+            RunningAnimation[] runningAnimations = entity.AnimManager.Animator.RunningAnimations;
+
+            foreach (RunningAnimation animation in runningAnimations)
+            {
+                if ( animation.meta == null )
+                    continue;
+
+                if (animation.meta.Animation == animMeta.Animation)
+                {
+                    if (animation.CurrentFrame >= releaseAtFrame)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public static bool CalculateLaunchAngle(double TargetDistance, double ProjectileVelocity, double gravity, out double CalculatedAngle)
@@ -566,19 +590,19 @@ namespace ExpandedAiTasks
 
             EntityProperties dummyType = entity.World.GetEntityType(new AssetLocation(dummyProjectile));
             EntityAIProjectile projectile = entity.World.ClassRegistry.CreateEntity(dummyType) as EntityAIProjectile;
-            projectile.FiredBy = entity;
-            projectile.Damage = projectileDamage;
+            projectile.firedBy = entity;
+            projectile.damage = projectileDamage;
             projectile.damageTier = projectileDamageTier;
-            projectile.ProjectileStack = new ItemStack(entity.World.GetItem(new AssetLocation(projectileItem)));
+            projectile.projectileStack = new ItemStack(entity.World.GetItem(new AssetLocation(projectileItem)));
 
-            projectile.DropOnImpactChance = projectileRemainsInWorld ? 1.0f - projectileBreakOnImpactChance : 0.0f;
+            projectile.dropOnImpactChance = projectileRemainsInWorld ? 1.0f - projectileBreakOnImpactChance : 0.0f;
 
             projectile.ServerPos.SetPos(shotStartPosition);
             projectile.ServerPos.Motion.Set(velocity);
             projectile.Pos.SetFrom(projectile.ServerPos);
 
             projectile.World = entity.World;
-            projectile.SetRotation();
+            projectile.AiProjectileSetRotation();
 
             entity.World.SpawnEntity(projectile);
 

@@ -24,10 +24,18 @@ namespace OutlawMod
         private static bool spawnIsBlockedByBlocker = false; //This must be reset whenever we do an OnEntitySpawn call. It is set by the PoiMatcher function to skip additional once we've found a ISpawnBlocker that will block our spawn request.
         private static Vec3d currentSpawnTryPosition;
 
+        private static bool levelReadyForOutlawSpawns = false;
+
         public static void Initialize( ICoreServerAPI server )
         {
             sapi = server;
             poiregistry = sapi.ModLoader.GetModSystem<POIRegistry>();
+            levelReadyForOutlawSpawns = true;
+        }
+
+        public static void Shutdown()
+        {
+            levelReadyForOutlawSpawns = false;
         }
 
         public static bool CanSpawnOutlaw( Vec3d position, AssetLocation code )
@@ -98,6 +106,9 @@ namespace OutlawMod
 
         private static bool SpawnExcludedBySafeZone(Vec3d position, AssetLocation code)
         {
+            if (!levelReadyForOutlawSpawns)
+                return true;
+
             double totalDays = sapi.World.Calendar.ElapsedDays;
             double safeZoneDaysLeft = Math.Max(OMGlobalConstants.startingSpawnSafeZoneLifetimeInDays - totalDays, 0);
             double safeZoneRadius = OMGlobalConstants.startingSpawnSafeZoneRadius;

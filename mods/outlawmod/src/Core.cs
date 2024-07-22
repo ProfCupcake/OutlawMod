@@ -132,7 +132,7 @@ namespace OutlawMod
             api.Event.ServerRunPhase(EnumServerRunPhase.GameReady, () => {
                 ApplyConfigGlobals();
             });
-            api.Event.ServerRunPhase(EnumServerRunPhase.GameReady, () =>
+            api.Event.ServerRunPhase(EnumServerRunPhase.RunGame, () =>
             {
                 //Initialize our static instance of our spawn evaluator.
                 OutlawSpawnEvaluator.Initialize(api as ICoreServerAPI);
@@ -144,6 +144,7 @@ namespace OutlawMod
         public override void Dispose()
         {
             harmony.UnpatchAll(harmony.Id);
+            OutlawSpawnEvaluator.Shutdown();
             base.Dispose();
         }
 

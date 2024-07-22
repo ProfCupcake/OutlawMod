@@ -48,6 +48,9 @@ namespace ExpandedAiTasks
 
                 if (__instance is EntityProjectile && !EntityManager.IsRegisteredAsEntityProjectile(__instance))
                     EntityManager.RegisterEntityProjectile(__instance);
+
+                if (__instance is EntityAIProjectile && !EntityManager.IsRegisteredAsEntityAIProjectile(__instance))
+                    EntityManager.RegisterEntityAIProjectile(__instance);
             }
         }
     }

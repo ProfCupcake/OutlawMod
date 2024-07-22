@@ -216,7 +216,7 @@
 						code: "shootatentity",
 						entityCodes: ["wolf-male", "wolf-female", "hyena-male", "hyena-female", "locust-*", "bear-*", "chicken-rooster", "chicken-hen", "chicken-baby", "hare-male", "hare-female", 
 							"fox-male-red", "fox-female-red", "fox-male-arctic", "fox-female-arctic", "pig-wild-male", "pig-wild-female", "raccoon-male", "raccoon-female", "sheep-bighorn-male", "sheep-bighorn-female",
-							"deer-*", "goat-*"],
+							"deer-*", "goat-*", "aurochs-male", "aurochs-female"],
 						priority: 3.75,
 						priorityForCancel: 9,
 						mincooldown: 1000, 
@@ -229,6 +229,7 @@
 						newTargetDistOffTarget: 0.0,
 						newTargetZeroingTime: 0.0,
 						damage: 6.0,
+						damageTier: 2.0,
 						damageFalloffPercent: 0.66,
 						damageFalloffStartDist: 18,
 						damageFalloffEndDist: 28,
@@ -243,7 +244,7 @@
 						fireOnLastKnownPosition: false,
 
 						durationMs: 2000,
-						releaseAtMs: 1000,
+						releaseAtFrame: 32,
 						seekingRange: 15,
 						animationSpeed: 1.0,
 						animation: "bowattack",
@@ -266,6 +267,7 @@
 						newTargetDistOffTarget: 0.75,
 						newTargetZeroingTime: 5.0,
 						damage: 3.0,
+						damageTier: 2.0,
 						damageFalloffPercent: 0.66,
 						damageFalloffStartDist: 18,
 						damageFalloffEndDist: 28,
@@ -280,7 +282,7 @@
 						lastKnownPositionTimeoutMs: 5000,
 
 						durationMs: 2000,
-						releaseAtMs: 1000,
+						releaseAtFrame: 32,
 						seekingRange: 15,
 						animationSpeed: 1.0,
 						animation: "bowattack",
@@ -368,6 +370,8 @@
 							{ code: "sheep-bighorn-female", fearWeight: 1.0},
 							{ code: "deer-*", fearWeight: 1.0},
 							{ code: "goat-*", fearWeight: 1.0},
+							{ code: "aurochs-male", fearWeight: 1.0},
+							{ code: "aurochs-female", fearWeight: 1.0},
 
 
 							//Mods
@@ -383,7 +387,7 @@
 						code: "engageentity",
 						entityCodes: [ "wolf-male", "wolf-female", "hyena-male", "hyena-female", "locust-*", "bear-*", "chicken-rooster", "chicken-hen", "chicken-baby", "hare-male", "hare-female", 
 							"fox-male-red", "fox-female-red", "fox-male-arctic", "fox-female-arctic", "pig-wild-male", "pig-wild-female", "raccoon-male", "raccoon-female", "sheep-bighorn-male", "sheep-bighorn-female",
-							"deer-*", "goat-*"],
+							"deer-*", "goat-*", "aurochs-male", "aurochs-female"],
 						priority: 2.0,
 						priorityForCancel: 3.0,
 						mincooldown: 0, 

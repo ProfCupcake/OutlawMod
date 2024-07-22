@@ -150,7 +150,7 @@
 			{ code: "harvestable", drops: [
 				{
 					type: "item",
-					code: "outlawhead-deserter-footman",
+					code: "outlawhead-deserter-knight",
 					quantity: { avg: 1, var: 0 }
 				},
 

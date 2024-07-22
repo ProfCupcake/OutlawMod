@@ -159,7 +159,7 @@
 					{
 						code: "melee",
 						entityCodes: ["player", "chicken-*", "hare-*", "fox-*", "pig-*", "raccoon-*", "sheep-*", "deer-*", "goat-*", "bandit-*", "poacher-*", "yeoman-*", "looter", "deserter-*", 
-						"hound-hunting", "humanoid-villager-*"],
+						"hound-hunting", "aurochs-*", "humanoid-villager-*"],
 						priority: 2,
 						damage: 2,
 						damageTier: 1,
@@ -201,7 +201,7 @@
 					{
 						code: "eatdead",
 						entityCodes: ["player", "chicken-*", "hare-*", "fox-*", "pig-*", "raccoon-*", "sheep-*", "bear-*", "deer-*", "goat-*", "bandit-*", "poacher-*", "yeoman-*", "looter", "deserter-*", 
-						"hound-hunting", "humanoid-villager-*"],
+						"hound-hunting", "aurochs-*", "humanoid-villager-*"],
 						priority: 1.52,
 
 						moveSpeed: 0.006,
@@ -224,7 +224,7 @@
 					{
 						code: "engageentity",
 						entityCodes: ["player", "chicken-*", "hare-*", "fox-*", "pig-*", "raccoon-*", "sheep-*", "deer-*", "goat-*", "bandit-*", "poacher-*", "yeoman-*", "looter", "deserter-*", 
-						"hound-hunting", "humanoid-villager-*"],
+						"hound-hunting", "aurochs-*", "humanoid-villager-*"],
 						priority: 1.5,
 						maxTargetHealth: 5.0,
 						packHunting: "true",

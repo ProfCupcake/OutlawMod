@@ -252,7 +252,7 @@
 						advanceAfterShooting: true,
 
 						durationMs: 2000,
-						releaseAtMs: 1000,
+						releaseAtFrame: 32,
 						animationSpeed: 1.0,
 						animation: "bowattack"
 					},

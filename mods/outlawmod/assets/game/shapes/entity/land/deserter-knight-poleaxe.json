@@ -30,7 +30,7 @@
 				"south": { "texture": "#deserter", "uv": [ 52.0, 10.0, 57.0, 15.0 ], "autoUv": false },
 				"west": { "texture": "#deserter", "uv": [ 46.0, 10.0, 52.0, 15.0 ], "autoUv": false },
 				"up": { "texture": "#deserter", "uv": [ 46.0, 7.0, 40.0, 10.0 ], "rotation": 90, "autoUv": false },
-				"down": { "texture": "#deserter", "uv": [ 46.0, 15.0, 40.0, 15.0 ], "rotation": 90, "autoUv": false }
+				"down": { "texture": "#deserter", "uv": [ 40.0, 10.0, 34.0, 15.0 ], "rotation": 90, "autoUv": false, "windMode": [-1,-1,-1,-1] }
 			},
 			"children": [
 				{

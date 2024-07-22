@@ -14,35 +14,29 @@ using Vintagestory.GameContent;
 
 namespace ExpandedAiTasks
 {
-    public class EntityAIProjectile : EntityProjectile
+    public class EntityAIProjectile : Entity
     {
-        bool beforeCollided;
-        bool stuck;
+        protected bool beforeCollided;
+        protected bool stuck;
 
-        long msLaunch;
-        long msCollide;
+        protected long msLaunch;
+        protected long msCollide;
 
-        Vec3d motionBeforeCollide = new Vec3d();
+        protected Vec3d motionBeforeCollide = new Vec3d();
 
-        CollisionTester collTester = new CollisionTester();
+        protected CollisionTester collTester = new CollisionTester();
 
-        //PARENT CLASS VARS (FOR REFRENCE)
-        //public Entity FiredBy;
-        //public float Weight = 0.1f;
-        //public float Damage;
-        //public ItemStack ProjectileStack;
-        //public float DropOnImpactChance = 0f;
-        //public bool DamageStackOnImpact = false;
-        
+        public Entity firedBy;
+        public float weight = 0.1f;
+        public float damage;
         public int damageTier = 0;
+        public ItemStack projectileStack;
+        public float dropOnImpactChance = 0f;
+        public bool damageStackOnImpact = false;
+        
+        protected Cuboidf collisionTestBox;
 
-
-        Cuboidf collisionTestBox;
-
-        EntityPartitioning ep;
-
-
-
+        protected EntityPartitioning ep;
 
         public override bool ApplyGravity
         {
@@ -64,14 +58,14 @@ namespace ExpandedAiTasks
 
             //if (api.Side == EnumAppSide.Server) - why only server side? This makes arrows fly through entities on the client
             {
-                GetBehavior<EntityBehaviorPassivePhysics>().OnPhysicsTickCallback = onPhysicsTickCallback;
+                GetBehavior<EntityBehaviorPassivePhysics>().OnPhysicsTickCallback = OnPhysicsTickCallback;
                 ep = api.ModLoader.GetModSystem<EntityPartitioning>();
             }
 
             GetBehavior<EntityBehaviorPassivePhysics>().collisionYExtra = 0f; // Slightly cheap hax so that stones/arrows don't collid with fences
         }
 
-        private void onPhysicsTickCallback(float dtFac)
+        protected virtual void OnPhysicsTickCallback(float dtFac)
         {
             if (ShouldDespawn || !Alive) return;
             if (World.ElapsedMilliseconds <= msCollide + 500) return;
@@ -83,21 +77,29 @@ namespace ExpandedAiTasks
 
             Cuboidd projectileBox = SelectionBox.ToDouble().Translate(pos.X, pos.Y, pos.Z);
 
-            if (pos.Motion.X < 0) projectileBox.X1 += pos.Motion.X * dtFac;
-            else projectileBox.X2 += pos.Motion.X * dtFac;
-            if (pos.Motion.Y < 0) projectileBox.Y1 += pos.Motion.Y * dtFac;
-            else projectileBox.Y2 += pos.Motion.Y * dtFac;
-            if (pos.Motion.Z < 0) projectileBox.Z1 += pos.Motion.Z * dtFac;
-            else projectileBox.Z2 += pos.Motion.Z * dtFac;
+            if (pos.Motion.X < 0) 
+                projectileBox.X1 += pos.Motion.X * dtFac;
+            else 
+                projectileBox.X2 += pos.Motion.X * dtFac;
+            
+            if (pos.Motion.Y < 0) 
+                projectileBox.Y1 += pos.Motion.Y * dtFac;
+            else 
+                projectileBox.Y2 += pos.Motion.Y * dtFac;
+            
+            if (pos.Motion.Z < 0) 
+                projectileBox.Z1 += pos.Motion.Z * dtFac;
+            else 
+                projectileBox.Z2 += pos.Motion.Z * dtFac;
 
             ep.WalkEntities(pos.XYZ, 5f, (e) => {
-                if (e.EntityId == this.EntityId || (FiredBy != null && e.EntityId == FiredBy.EntityId && World.ElapsedMilliseconds - msLaunch < 500) || !e.IsInteractable) return true;
+                if (e.EntityId == this.EntityId || (firedBy != null && e.EntityId == firedBy.EntityId && World.ElapsedMilliseconds - msLaunch < 500) || !e.IsInteractable) return true;
 
                 Cuboidd eBox = e.SelectionBox.ToDouble().Translate(e.ServerPos.X, e.ServerPos.Y, e.ServerPos.Z);
 
                 if (eBox.IntersectsOrTouches(projectileBox))
                 {
-                    impactOnEntity(e);
+                    ImpactOnEntity(e);
                     return false;
                 }
 
@@ -109,7 +111,9 @@ namespace ExpandedAiTasks
         public override void OnGameTick(float dt)
         {
             base.OnGameTick(dt);
-            if (ShouldDespawn) return;
+            
+            if (ShouldDespawn) 
+                return;
 
             EntityPos pos = SidedPos;
 
@@ -126,7 +130,7 @@ namespace ExpandedAiTasks
             }
             else
             {
-                SetRotation();
+                AiProjectileSetRotation();
             }
 
             if (TryAttackEntity(impactSpeed))
@@ -148,7 +152,7 @@ namespace ExpandedAiTasks
         }
 
 
-        private void IsColliding(EntityPos pos, double impactSpeed)
+        protected virtual void IsColliding(EntityPos pos, double impactSpeed)
         {
             pos.Motion.Set(0, 0, 0);
 
@@ -161,7 +165,7 @@ namespace ExpandedAiTasks
                     // Resend position to client
                     WatchedAttributes.MarkAllDirty();
 
-                    if (World.Rand.NextDouble() > DropOnImpactChance)
+                    if (World.Rand.NextDouble() > dropOnImpactChance)
                         Die();
                 }
 
@@ -171,12 +175,10 @@ namespace ExpandedAiTasks
 
                 beforeCollided = true;
             }
-
-
         }
 
 
-        bool TryAttackEntity(double impactSpeed)
+        protected virtual bool TryAttackEntity(double impactSpeed)
         {
             if (World is IClientWorldAccessor || World.ElapsedMilliseconds <= msCollide + 250) return false;
             if (impactSpeed <= 0.01) return false;
@@ -202,12 +204,12 @@ namespace ExpandedAiTasks
                 projectileBox.Z2 += 1.5 * ServerPos.Motion.Z;
 
             Entity entity = World.GetNearestEntity(ServerPos.XYZ, 5f, 5f, (e) => {
-                if (e.EntityId == this.EntityId || !e.IsInteractable) return false;
-
-                if (FiredBy != null && e.EntityId == FiredBy.EntityId && World.ElapsedMilliseconds - msLaunch < 500)
-                {
+                
+                if (e.EntityId == this.EntityId || !e.IsInteractable) 
                     return false;
-                }
+
+                if (firedBy != null && e.EntityId == firedBy.EntityId && World.ElapsedMilliseconds - msLaunch < 500)
+                    return false;
 
                 Cuboidd eBox = e.SelectionBox.ToDouble().Translate(e.ServerPos.X, e.ServerPos.Y, e.ServerPos.Z);
 
@@ -216,7 +218,7 @@ namespace ExpandedAiTasks
 
             if (entity != null)
             {
-                impactOnEntity(entity);
+                ImpactOnEntity(entity);
                 return true;
             }
 
@@ -225,7 +227,7 @@ namespace ExpandedAiTasks
         }
 
 
-        private void impactOnEntity(Entity entity)
+        protected virtual void ImpactOnEntity(Entity entity)
         {
             if (!Alive) 
                 return;
@@ -233,9 +235,9 @@ namespace ExpandedAiTasks
             EntityPos pos = SidedPos;
 
             IServerPlayer fromPlayer = null;
-            if (FiredBy is EntityPlayer)
+            if (firedBy is EntityPlayer)
             {
-                fromPlayer = (FiredBy as EntityPlayer).Player as IServerPlayer;
+                fromPlayer = (firedBy as EntityPlayer).Player as IServerPlayer;
             }
 
             bool targetIsPlayer = entity is EntityPlayer;
@@ -257,31 +259,31 @@ namespace ExpandedAiTasks
             {
                 World.PlaySoundAt(new AssetLocation("sounds/arrow-impact"), this, null, false, 24);
 
-                float dmg = Damage;
-                if (FiredBy != null) dmg *= FiredBy.Stats.GetBlended("rangedWeaponsDamage");
+                float dmg = damage;
+                if (firedBy != null) dmg *= firedBy.Stats.GetBlended("rangedWeaponsDamage");
 
                 bool didDamage = entity.ReceiveDamage(new DamageSource()
                 {
                     Source = fromPlayer != null ? EnumDamageSource.Player : EnumDamageSource.Entity,
                     SourceEntity = this,
-                    CauseEntity = FiredBy,
+                    CauseEntity = firedBy,
                     Type = EnumDamageType.PiercingAttack,
                     DamageTier = damageTier
                 }, dmg);
 
                 float kbresist = entity.Properties.KnockbackResistance;
-                entity.SidedPos.Motion.Add(kbresist * pos.Motion.X * Weight, kbresist * pos.Motion.Y * Weight, kbresist * pos.Motion.Z * Weight);
+                entity.SidedPos.Motion.Add(kbresist * pos.Motion.X * weight, kbresist * pos.Motion.Y * weight, kbresist * pos.Motion.Z * weight);
 
-                if (World.Rand.NextDouble() > DropOnImpactChance)
+                if (World.Rand.NextDouble() > dropOnImpactChance)
                     Die();
 
-                if (FiredBy is EntityPlayer && didDamage)
-                    World.PlaySoundFor(new AssetLocation("sounds/player/projectilehit"), (FiredBy as EntityPlayer).Player, false, 24);
+                if (firedBy is EntityPlayer && didDamage)
+                    World.PlaySoundFor(new AssetLocation("sounds/player/projectilehit"), (firedBy as EntityPlayer).Player, false, 24);
             }
         }
 
 
-        public virtual void SetRotation()
+        public virtual void AiProjectileSetRotation()
         {
             EntityPos pos = (World is IServerWorldAccessor) ? ServerPos : Pos;
 
@@ -309,8 +311,8 @@ namespace ExpandedAiTasks
 
         public override ItemStack OnCollected(Entity byEntity)
         {
-            ProjectileStack.ResolveBlockOrItem(World);
-            return ProjectileStack;
+            projectileStack.ResolveBlockOrItem(World);
+            return projectileStack;
         }
 
 
@@ -323,14 +325,14 @@ namespace ExpandedAiTasks
         {
             base.ToBytes(writer, forClient);
             writer.Write(beforeCollided);
-            ProjectileStack.ToBytes(writer);
+            projectileStack.ToBytes(writer);
         }
 
         public override void FromBytes(BinaryReader reader, bool fromServer)
         {
             base.FromBytes(reader, fromServer);
             beforeCollided = reader.ReadBoolean();
-            ProjectileStack = new ItemStack(reader);
+            projectileStack = new ItemStack(reader);
         }
     }
 }

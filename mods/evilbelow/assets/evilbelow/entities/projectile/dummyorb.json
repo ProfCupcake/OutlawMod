@@ -1,0 +1,35 @@
+{
+	code: "dummyorb",
+	class: "EntityAIProjectileExplosive",
+	variantgroups: [
+		{ code:"type", states: ["green"] }
+	],
+	hitboxSize: { x: 0.4, y: 0.4 },
+	deadHitboxSize: { x: 0.25, y: 0.25 },
+	client: {
+		renderer: "Shape",
+		texturesByType: {
+			"*-green":{
+				"orb" : { base: "evilbelow:entity/creature/green_eyes" }
+			}
+		},
+		shape: { base: "evilbelow:projectile/orb" },
+		size: 1,
+		behaviors: [{ code: "passivephysics" }, { code: "interpolateposition" }]
+	},
+	server: {
+		behaviors: [{ code: "passivephysics" }, { code: "despawn", minSeconds: 10.0 }]
+	},
+	sounds: {
+	},
+	attributes: {
+		physics: {
+			groundDragFactor: 1,
+			airDragFactor: 0.0,
+			gravityFactor: 1.0
+		},
+		blastType: 0, //OreBlast
+		blastRadius: 5,
+		injureRadius: 5
+	}
+}

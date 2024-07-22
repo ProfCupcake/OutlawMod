@@ -56,7 +56,7 @@ namespace OutlawMod
                 case "yeoman-archer":
                 case "deserter-archer":
                 case "deserter-footman":
-                case "deserter-bannerman":
+                case "deserter-bannerman-*":
                     return ShouldSpawnOutlawOfType(ref properties, spawnPosition);
                 case "hound-feral":
                 case "hound-hunting":

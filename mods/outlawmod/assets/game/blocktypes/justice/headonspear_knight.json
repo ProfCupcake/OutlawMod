@@ -27,9 +27,9 @@
 	lightAbsorption: 0,
     shapeByType: {
 		"*-north": { base: "block/justice/head_on_spear_knight1", rotateY:90, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:90 }, { base: "block/justice/head_on_spear_knight3", rotateY:90 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] },
-		"*-east": { base: "block/justice/head_on_spear_knight1", rotateY:0, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:0 }, { base: "block/justice/head_on_spear_knight3", rotateY:0 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] },
-		"*-south": { base: "block/justice/head_on_spear_knight1", rotateY:270, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:270 }, { base: "block/justice/head_on_spear_knight3", rotateY:270 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] },
-		"*-west": { base: "block/justice/head_on_spear_knight1", rotateY:180, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:180 }, { base: "block/justice/head_on_spear_knight3", rotateY:180 }, { base: "block/justice/head_on_spear_knight1", rotateY:90 }  ] }
+		"*-east": { base: "block/justice/head_on_spear_knight1", rotateY:0, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:0 }, { base: "block/justice/head_on_spear_knight3", rotateY:0 }, { base: "block/justice/head_on_spear_knight1", rotateY:0 }  ] },
+		"*-south": { base: "block/justice/head_on_spear_knight1", rotateY:270, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:270 }, { base: "block/justice/head_on_spear_knight3", rotateY:270 }, { base: "block/justice/head_on_spear_knight1", rotateY:270 }  ] },
+		"*-west": { base: "block/justice/head_on_spear_knight1", rotateY:180, alternates: [ { base: "block/justice/head_on_spear_knight2", rotateY:180 }, { base: "block/justice/head_on_spear_knight3", rotateY:180 }, { base: "block/justice/head_on_spear_knight1", rotateY:180 }  ] }
 	},
 	texturesByType: {
 		"*-deserter-knight-*": {

@@ -9,7 +9,7 @@
 		hasNightVision: true,
 		reckless: false, 
 		classicVoice: "sounds/voice/harmonica",
-		killedByInfoText: "evilbelow:deadcreature-eaten-ghoul",
+		killedByInfoText: "deadcreature-eaten-ghoul",
 	},
 
 	drops: [
@@ -29,6 +29,7 @@
 		shape: { base: "entity/land/ghoul" },
 		textures: {
 			"ghoul": { base: "entity/creature/ghoul", alternates: [ { base: "entity/creature/ghoul2" }, { base: "entity/creature/ghoul3" }, { base: "entity/creature/ghoul4" } ] },
+			"red_eyes": { base: "entity/creature/red_eyes", alternates: [ { base: "entity/creature/red_eyes" }, { base: "entity/creature/red_eyes" }, { base: "entity/creature/red_eyes" } ] },
 		},
 		behaviors: [
 			{ code: "lodrepulseagents" }, //Our custom repulse agents behavior with tick LODing based on player distance.
@@ -259,14 +260,14 @@
 			runtime: {
 				group: "hostile",
 				tryOnlySurface: false,
-				chance: 0.1,
+				chance: 0.05,
 				maxQuantity: 32,
 				//maxQuantityByGroup: { code: "ghoul", maxQuantity: 32 },
 				spawnCapPlayerScaling: 0.05,
 				"__comment": "Make them spawn away from artifical light",
 				maxLightLevel: 4,
 				lightLevelType: "MaxLight",					
-				groupSize: { dist: "stronginvexp", avg: 8, var: 4 },
+				groupSize: { dist: "stronginvexp", avg: 6, var: 6 },
 				insideBlockCodes: ["game:air", "loosestones-*"],
 				maxY:0.95,
 				MinDistanceToPlayer: 15,

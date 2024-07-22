@@ -57,12 +57,14 @@ namespace ExpandedAiTasks.Managers
         {
             //We can run into situations where an object saved in a chunk has the same entity ID as a loaded entity in the world.
             //In these cases, the loaded object is deleted on load. We need to handle the case where the entity IDs match, but the entities are diffrent.
-            //This is a native Vintage Story issue.
+            //This is a native Vintage Story issue. In these cases, we simply add the new projectile, because the deleted entity will be removed the next time the managed entity array is checked.
+            /*
             if (entity.EntityId == lastEntIDAdded)
             {
                 Entity dupeEnt = entity.World.GetEntityById(lastEntIDAdded);
                 Debug.Assert(dupeEnt != entity, "We are trying to add Entity " + entity.Code.ToString() + " to Entity Ledger, but It Already Exists in the Ledger.");
             }
+            */
 
             string codeStart = entity.FirstCodePart();
             AssetLocation searchCode = entity.Code;
@@ -94,13 +96,15 @@ namespace ExpandedAiTasks.Managers
 
             //We can run into situations where an object saved in a chunk has the same entity ID as a loaded entity in the world.
             //In these cases, the loaded object is deleted on load. We need to handle the case where the entity IDs match, but the entities are diffrent.
-            //This is a native Vintage Story issue.
+            //This is a native Vintage Story issue. In these cases, we simply add the new projectile, because the deleted entity will be removed the next time the managed entity array is checked.
+            /*
             if ( entity.EntityId == lastEntItemIDAdded )
             {
                 Entity dupeEnt = entity.World.GetEntityById( lastEntItemIDAdded );
                 Debug.Assert(dupeEnt != entity, "We are trying to add EntityItem with Item Stack " + item.Itemstack + " to Entity Ledger, but It Already Exists in the Ledger.");
             }
-            
+            */
+
             if ( item.Itemstack.Block == null )
             {
                 Debug.Assert(item.Itemstack.Item != null);
@@ -564,7 +568,7 @@ namespace ExpandedAiTasks.Managers
                 }
             }
         }
-    }   
+    }
 
     /*   
      _____       _   _ _           __  __                                   
@@ -594,8 +598,11 @@ namespace ExpandedAiTasks.Managers
         /////////////////
         private static ManagedEntityArray _meaEntityProjectiles = new ManagedEntityArray();
         private static ManagedEntityArray _meaEntityProjectilesInFlight = new ManagedEntityArray();
+        private static ManagedEntityArray _meaEntityAIProjectiles = new ManagedEntityArray();
+        private static ManagedEntityArray _meaEntityAIProjectilesInFlight = new ManagedEntityArray();
         private static long lastProjectileEntIDAdded = -1;
-        
+        private static long lastAIProjectileEntIDAdded = -1;
+
         public static List<EntityProjectile> entityProjectiles
         {
             get
@@ -625,11 +632,42 @@ namespace ExpandedAiTasks.Managers
             }
         }
 
+        public static List<EntityAIProjectile> entityAiProjectiles
+        {
+            get
+            {
+                List<EntityAIProjectile> entityAiProjectiles = new List<EntityAIProjectile>();
+                foreach( Entity aiProjectile in _meaEntityAIProjectiles.GetManagedList() )
+                {
+                    entityAiProjectiles.Add( aiProjectile as EntityAIProjectile );
+                }
+
+                return entityAiProjectiles;
+            }
+        }
+
+        public static List<EntityAIProjectile> entityAiProjectilesInFlight
+        {
+            get
+            {
+                List<EntityAIProjectile> entityAiProjectilesInFlight = new List<EntityAIProjectile>();
+                _meaEntityAIProjectilesInFlight.FilterByCheckResult(ProjectileIsInFlight);
+                foreach ( Entity aiProjectile in _meaEntityAIProjectilesInFlight.GetManagedList() )
+                {
+                    entityAiProjectilesInFlight.Add( aiProjectile as EntityAIProjectile );
+                }
+
+                return entityAiProjectilesInFlight;
+            }
+        }
+
         public static void ShutdownCleanup()
         {
             //Clean Up Managed Arrays
             _meaEntityProjectiles.Clear();
             _meaEntityProjectilesInFlight.Clear();
+            _meaEntityAIProjectiles.Clear();
+            _meaEntityAIProjectilesInFlight.Clear();
 
             //Clean Up Dibs System
             entityDibsDatabase.ShutdownCleanup();
@@ -639,6 +677,7 @@ namespace ExpandedAiTasks.Managers
             itemLedger.ShutdownCleanup();
 
             lastProjectileEntIDAdded = -1;
+            lastAIProjectileEntIDAdded = -1;
         }
 
         private static bool ProjectileIsInFlight( Entity entity )
@@ -711,12 +750,14 @@ namespace ExpandedAiTasks.Managers
 
             //We can run into situations where an object saved in a chunk has the same entity ID as a loaded entity in the world.
             //In these cases, the loaded object is deleted on load. We need to handle the case where the entity IDs match, but the entities are diffrent.
-            //This is a native Vintage Story issue.
+            //This is a native Vintage Story issue. In these cases, we simply add the new projectile, because the deleted entity will be removed the next time the managed entity array is checked.
+            /*
             if (entity.EntityId == lastProjectileEntIDAdded)
             {
                 Entity dupeEnt = entity.World.GetEntityById(lastProjectileEntIDAdded);
                 Debug.Assert(dupeEnt != entity, "We are trying to add EntityProjectile " + entity.Code.ToString() + " to Entity Manager Projectile Tracking, but It Already Exists in the system.");
             }
+            */
 
             _meaEntityProjectiles.AddEntity(entity);
             _meaEntityProjectilesInFlight.AddEntity(entity);
@@ -724,9 +765,37 @@ namespace ExpandedAiTasks.Managers
             lastProjectileEntIDAdded = entity.EntityId;
         }
 
+        public static void RegisterEntityAIProjectile( Entity entity )
+        {
+            Debug.Assert(entity is EntityAIProjectile);
+
+            //We can run into situations where an object saved in a chunk has the same entity ID as a loaded entity in the world.
+            //In these cases, the loaded object is deleted on load. We need to handle the case where the entity IDs match, but the entities are diffrent.
+            //This is a native Vintage Story issue. In these cases, we simply add the new projectile, because the deleted entity will be removed the next time the managed entity array is checked.
+            /*
+            if ( entity.EntityId == lastAIProjectileEntIDAdded )
+            {
+                Entity dupeEnt = entity.World.GetEntityById(lastAIProjectileEntIDAdded);
+                Debug.Assert(dupeEnt != entity, "We are trying to add EntityAIProjectile " + entity.Code.ToString() + " to Entity Manager AI Projectile Tracking, but It Already Exists in the system.");
+            }
+            */
+
+            _meaEntityAIProjectiles.AddEntity(entity);
+            _meaEntityAIProjectilesInFlight.AddEntity(entity);
+
+            lastAIProjectileEntIDAdded = entity.EntityId;
+        }
+
         public static bool IsRegisteredAsEntityProjectile(Entity entity)
         {
+            Debug.Assert( entity is EntityProjectile );
             return _meaEntityProjectiles.Contains(entity);
+        }
+
+        public static bool IsRegisteredAsEntityAIProjectile( Entity entity )
+        {
+            Debug.Assert(entity is EntityAIProjectile);
+            return _meaEntityAIProjectiles.Contains(entity);
         }
 
         private static List<EntityProjectile> projectilesInRange = new List<EntityProjectile>();
@@ -747,7 +816,7 @@ namespace ExpandedAiTasks.Managers
 
         public static List<EntityProjectile> GetAllEntityProjectilesInFlightWithinRangeOfPos(Vec3d pos, float range)
         {
-            List<EntityProjectile> projectiles = entityProjectilesInFlight ;
+            List<EntityProjectile> projectiles = entityProjectilesInFlight;
             projectilesInRange.Clear();
             foreach (EntityProjectile projectile in projectiles)
             {
@@ -758,6 +827,38 @@ namespace ExpandedAiTasks.Managers
             }
 
             return projectilesInRange;
+        }
+
+        private static List<EntityAIProjectile> aiProjectilesInRange = new List<EntityAIProjectile>();
+
+        public static List<EntityAIProjectile> GetAllEntityAIProjectilesWithinRangeOfPos( Vec3d pos, float range) 
+        {
+            List<EntityAIProjectile> aiProjectiles = entityAiProjectiles;
+            aiProjectilesInRange.Clear();
+            foreach ( EntityAIProjectile aiProjectile in aiProjectiles)
+            {
+                if( aiProjectile.ServerPos.SquareDistanceTo( pos ) <= range * range )
+                {
+                    aiProjectilesInRange.Add(aiProjectile);
+                }
+            }
+
+            return aiProjectilesInRange;
+        }
+
+        public static List<EntityAIProjectile> GetAllEntityAIProjectilesInFlightWithinRangeOfPos(Vec3d pos, float range)
+        {
+            List<EntityAIProjectile> aiProjectiles = entityAiProjectilesInFlight;
+            aiProjectilesInRange.Clear();
+            foreach ( EntityAIProjectile projectile in aiProjectiles )
+            {
+                if( projectile.ServerPos.SquareDistanceTo(pos) <= range * range )
+                {
+                    aiProjectilesInRange.Add(projectile);
+                }
+            }
+
+            return aiProjectilesInRange;
         }
 
         public static Entity GetNearestEntity(List<Entity> entities, Vec3d position, double radius, ActionConsumable<Entity> matches = null)

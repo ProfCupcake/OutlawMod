@@ -1,0 +1,9 @@
+{
+	"deathmsg-ghoul-1": "{0} was torn appart by the eyes in the dark.",
+	"deathmsg-ghoulaxe-1": "{0} lost their head to the butcher.",
+	"deathmsg-magigreen-1": "{0} was removed from the universe.",
+	
+	"deadcreature-eaten-ghoul": "Slain by something evil.\nThey were clubbed to death and partly eaten.\n",
+	"deadcreature-eaten-ghoulaxe": "Slain by something evil.\nThey were chopped up with a large axe.\n",
+	"deadcreature-eaten-magigreen": "Slain by something evil.\nThey were obliterated.\n",
+}

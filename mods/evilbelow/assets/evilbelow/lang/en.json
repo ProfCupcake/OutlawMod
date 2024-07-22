@@ -1,18 +1,16 @@
 {	
-	"evilbelow:deathmsg-ghoul-1": "{0} was torn appart by the eyes in the dark.",
-	"evilbelow:deathmsg-ghoulaxe-1": "{0} lost their head to the butcher.",
-
 	//CREATURES
-
 	"evilbelow:item-creature-ghoul": "Ravenous Ghoul",
 	"evilbelow:itemdesc-creature-ghoul": "<font color=\"#99c9f9\"><i>The souls of the restless dead.</i></font><br>",
 	"evilbelow:item-dead-creature-ghoul": "Dead Ravenous Ghoul",
-	"evilbelow:deadcreature-eaten-ghoul": "Slain by something evil.\nThey were clubbed to death and partly eaten.\n",
 
 	"evilbelow:item-creature-ghoul-axe": "Barrow Butcher",
 	"evilbelow:itemdesc-creature-ghoul-axe": "<font color=\"#99c9f9\"><i>The souls of the restless dead.</i></font><br>",
 	"evilbelow:item-dead-creature-ghoul-axe": "Dead Barrow Butcher",
-	"evilbelow:deadcreature-eaten-ghoulaxe": "Slain by something evil.\nThey were chopped up with a large axe.\n",
+
+	"evilbelow:item-creature-magi-green": "Malevolent Magi (Green)",
+	"evilbelow:itemdesc-creature-magi-green": "<font color=\"#99c9f9\"><i>A powerful magi who has been corrupted by the things in the deep.</i></font><br>",
+	"evilbelow:item-dead-creature-magi-green": "Dead Malevolent Magi (Green)",
 
 	"block-carcass-human": "Carcass (Human)",
 
