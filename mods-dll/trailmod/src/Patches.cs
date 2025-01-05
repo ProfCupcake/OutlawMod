@@ -47,7 +47,7 @@ namespace TrailMod
                 return;
 
             //Only run trail logic within 100 blocks of a player.
-            if (entity.minRangeToClient > 100)
+            if (entity.minHorRangeToClient > 100)
                 return;
 
             if ( entity is EntityPlayer )
@@ -60,8 +60,9 @@ namespace TrailMod
             if (world.Side == EnumAppSide.Client)
                 return;
 
+            /*
             if (!entity.Collided)
-                return;
+                return; //*/
 
             TrailChunkManager trailChunkManager = TrailChunkManager.GetTrailChunkManager();
             bool shouldTrackTrailData = trailChunkManager.ShouldTrackBlockTrailData(__instance);
